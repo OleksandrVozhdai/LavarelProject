@@ -13,16 +13,24 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->timestamps();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone_number');
+            $table->string('street');
+            $table->string('city');
+            $table->string('country');
         });
 
         $faker = Faker::create();
         for ($i = 0; $i < 200; $i++) {
             DB::table('people')->insert([
-                'name' => $faker->name,
-                'email' => $faker->email,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'phone_number' => $faker->phoneNumber,
+                'street' => $faker->streetAddress,
+                'city' => $faker->city,
+                'country' => $faker->country,
+                
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
