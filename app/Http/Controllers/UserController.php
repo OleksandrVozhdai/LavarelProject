@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\People;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,10 +12,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        $records = ExampleModel::all();
-        return response()->json($records);
+        $people = People::all();
+        return response()->json($people);
     }
 
     /**
@@ -25,8 +27,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $record = ExampleModel::create($request->all());
-        return response()->json($record, 201);
+        $data = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'street' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            // inne walidacje i właściwości
+        ]);
+
+        $person = People::create($data);
+
+        return response()->json($person, 201);
     }
 
     /**
@@ -37,8 +50,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $record = ExampleModel::findOrFail($id);
-        return response()->json($record);
+        $person = People::findOrFail($id);
+        return response()->json($person);
     }
 
     /**
@@ -50,9 +63,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $record = ExampleModel::findOrFail($id);
-        $record->update($request->all());
-        return response()->json($record);
+        $data = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'street' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            // inne walidacje i właściwości
+        ]);
+
+        $person = People::findOrFail($id);
+        $person->update($data);
+
+        return response()->json($person);
     }
 
     /**
@@ -63,8 +87,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $record = ExampleModel::findOrFail($id);
-        $record->delete();
+        $person = People::findOrFail($id);
+        $person->delete();
+
         return response()->json(null, 204);
     }
 }
