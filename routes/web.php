@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // routes/web.php
 
-Route::get('/Vozhdai/51758/people/{id}', 'PeopleController@show');
+Route::get('/Vozhdai/51758/people/5', 'PeopleController@show');
 
 Route::get('/', function () {
     return view('welcome');
